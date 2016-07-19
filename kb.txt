@@ -1,0 +1,40 @@
+Browser Req -> lib/user_form/endpoint.ex 
+			-> web/router.ex 
+			-> web/controller/user_controller.ex
+			-> model/user.ex
+			-> view/user_view.ex
+			-> templates/user/index-new-show.html pages
+
+
+user_controller - >
+	1) define model (alias UserForm.User)
+	2) in web/models/user.ex (write schema, Changeset and validation related actions).
+	3) In controller different functions for different http requests (mix phoenix.routes)
+	4) changeset is used for post requests to validate fields and data
+
+
+====  db
+mix ecto.create (create the database for the user )
+
+
+mix ecto.gen.migration create_user	 // this will take the schema from the model and create a user 
+
+and then add the below schema same as model/user.ex to priv/repo/migration.....exs in the change action
+
+	def change do
+		create table(:users) do
+			add :name, :string
+			add :username, :string, null: false
+			add :password_hash, :string
+			timestamps
+		end
+		create unique_index(:users, [:username])
+	end
+
+==== postgres commands
+	Repo.insert(user)
+	repo.get(user,id)
+	repo.all(user)
+
+
+create some html files to display the results.
